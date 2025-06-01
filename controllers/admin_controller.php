@@ -11,24 +11,29 @@ class AdminController
         $this->pdo = $pdo;
     }
 
-    public function getUsuariosConRoles()
+    public function getUsuariosConRoles($limit = 3, $offset = 0)
     {
         $query = "SELECT 
                 u.id, 
                 u.nombre_usuario,
                 u.nombre_completo,
                 u.correo,
-                r.nombre as rol,
-                AES_DECRYPT(u.telefono, 'llave_secreta') as telefono,
-                AES_DECRYPT(u.DUI, 'llave_secreta') as DUI
-              FROM usuarios u
-              JOIN roles r ON u.id_rol = r.id";
+                r.nombre AS rol,
+                AES_DECRYPT(u.telefono, 'llave_secreta') AS telefono,
+                AES_DECRYPT(u.DUI, 'llave_secreta') AS DUI
+                FROM usuarios u
+                JOIN roles r ON u.id_rol = r.id
+                ORDER BY u.id ASC
+                LIMIT :limit OFFSET :offset";
 
-        $stmt = $this->pdo->query($query);
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
         $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         // Transformar 'Administrador' a 'Admin' en los resultados
-        return array_map(function($usuario) {
+        return array_map(function ($usuario) {
             if ($usuario['rol'] === 'Administrador') {
                 $usuario['rol'] = 'Admin';
             }
@@ -68,5 +73,13 @@ class AdminController
         $clases = $styles[$rolNormalized] ?? $styles['usuario'];
 
         return "<span class='{$clases} text-xs px-2 py-1 rounded-full'>" . ucfirst($rolNormalized) . "</span>";
+    }
+
+    public function getTotalUsuarios()
+    {
+        $query = "SELECT COUNT(*) as total FROM usuarios";
+        $stmt = $this->pdo->query($query);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
     }
 }

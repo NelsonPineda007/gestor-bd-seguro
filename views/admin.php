@@ -7,6 +7,15 @@ $adminController = new AdminController();
 $usuarios = $adminController->getUsuariosConRoles();
 $csrfToken = CSRF::generarToken();
 
+$paginaActual = $_GET['pagina'] ?? 1;
+$usuariosPorPagina = 3;
+$offset = ($paginaActual - 1) * $usuariosPorPagina;
+
+$adminController = new AdminController();
+$usuarios = $adminController->getUsuariosConRoles($usuariosPorPagina, $offset);
+$totalUsuarios = $adminController->getTotalUsuarios();
+$totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
+
 ?>
 
 <html lang="es">
@@ -170,6 +179,7 @@ $csrfToken = CSRF::generarToken();
 
                     <div class="bg-gray-800 rounded-xl shadow-inner overflow-hidden">
                         <div class="overflow-x-auto">
+                            <!-- tabla Usuario con sus CRUD -->
                             <table class="w-full text-left">
                                 <thead class="bg-gray-700">
                                     <tr>
@@ -214,19 +224,52 @@ $csrfToken = CSRF::generarToken();
                             </table>
                         </div>
                         <div class="bg-gray-700 px-6 py-3 flex justify-between items-center">
-                            <span class="text-sm text-gray-400">Mostrando 3 de 128 usuarios</span>
+                            <span class="text-sm text-gray-400">Mostrando <?= count($usuarios) ?> de <?= $totalUsuarios ?> usuarios</span>
                             <div class="flex space-x-2">
-                                <button class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 rounded-md disabled">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                                <button class="bg-orange-600 text-white p-1 px-2 rounded-md">1</button>
-                                <button class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">2</button>
-                                <button class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">3</button>
-                                <span class="px-2">...</span>
-                                <button class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">12</button>
-                                <button class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 rounded-md">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
+                                <!-- Botón Anterior -->
+                                <?php if ($paginaActual > 1): ?>
+                                    <a href="?pagina=<?= $paginaActual - 1 ?>" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 rounded-md">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <button class="bg-gray-600 text-gray-300 p-1 rounded-md disabled" disabled>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                <?php endif; ?>
+
+                                <!-- Números de página -->
+                                <?php
+                                $paginasAMostrar = 3; // Número de páginas a mostrar alrededor de la actual
+                                $inicio = max(1, $paginaActual - $paginasAMostrar);
+                                $fin = min($totalPaginas, $paginaActual + $paginasAMostrar);
+
+                                if ($inicio > 1) {
+                                    echo '<a href="?pagina=1" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">1</a>';
+                                    if ($inicio > 2) echo '<span class="px-2">...</span>';
+                                }
+
+                                for ($i = $inicio; $i <= $fin; $i++): ?>
+                                    <a href="?pagina=<?= $i ?>" class="<?= $i == $paginaActual ? 'bg-orange-600 text-white' : 'bg-gray-600 hover:bg-gray-500 text-gray-300' ?> p-1 px-2 rounded-md">
+                                        <?= $i ?>
+                                    </a>
+                                <?php endfor;
+
+                                if ($fin < $totalPaginas) {
+                                    if ($fin < $totalPaginas - 1) echo '<span class="px-2">...</span>';
+                                    echo '<a href="?pagina=' . $totalPaginas . '" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">' . $totalPaginas . '</a>';
+                                }
+                                ?>
+
+                                <!-- Botón Siguiente -->
+                                <?php if ($paginaActual < $totalPaginas): ?>
+                                    <a href="?pagina=<?= $paginaActual + 1 ?>" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 rounded-md">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <button class="bg-gray-600 text-gray-300 p-1 rounded-md disabled" disabled>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
