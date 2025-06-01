@@ -1,0 +1,172 @@
+=== procesar_login.php llamado ===
+Usuario recibido: adminCITO
+Password recibido: admin123
+Contraseña desencriptada BD: admin123
+Contraseña correcta
+[2025-05-29 08:54:07] === procesar_login.php llamado ===
+[2025-05-29 08:54:07] Usuario recibido: adminCITO
+[2025-05-29 08:54:07] Password recibido: admin123
+[2025-05-29 08:54:07] Contraseña desencriptada BD: admin123
+[2025-05-29 08:54:07] Contraseña correcta
+[2025-05-29 08:54:07] Sesión iniciada para usuario: adminCITO con rol admin
+[2025-06-01 03:33:06] === procesar_login.php llamado ===
+[2025-06-01 03:33:06] Usuario recibido: adminCITO
+[2025-06-01 03:33:06] Password recibido: admin123
+[2025-06-01 03:33:06] Contraseña desencriptada BD: admin123
+[2025-06-01 03:33:06] Contraseña correcta
+[2025-06-01 03:33:06] Sesión iniciada para usuario: adminCITO con rol admin
+[2025-06-01 03:35:07] === procesar_login.php llamado ===
+[2025-06-01 03:35:07] Usuario recibido: adminCITO
+[2025-06-01 03:35:07] Password recibido: admin123
+[2025-06-01 03:35:07] Contraseña desencriptada BD: admin123
+[2025-06-01 03:35:07] Contraseña correcta
+[2025-06-01 03:35:07] Sesión iniciada para usuario: adminCITO con rol admin
+[2025-06-01 03:35:53] === procesar_login.php llamado ===
+[2025-06-01 03:35:53] Usuario recibido: adminCITO
+[2025-06-01 03:35:53] Password recibido: admin123
+[2025-06-01 03:35:53] Contraseña desencriptada BD: admin123
+[2025-06-01 03:35:53] Contraseña correcta
+[2025-06-01 03:35:53] Sesión iniciada para usuario: adminCITO con rol admin
+[2025-06-01 03:43:02] === procesar_login.php llamado ===
+[2025-06-01 03:43:02] Usuario recibido: auditorVLADYBOY
+[2025-06-01 03:43:02] Password recibido: chinobd
+[2025-06-01 03:43:02] Contraseña desencriptada BD: chinobd
+[2025-06-01 03:43:02] Contraseña correcta
+[2025-06-01 03:43:02] Sesión iniciada para usuario: auditorVLADYBOY con rol auditor
+[2025-06-01 03:44:21] === procesar_login.php llamado ===
+[2025-06-01 03:44:21] Usuario recibido: Raul usuyork
+[2025-06-01 03:44:21] Password recibido: vladyfemboy
+[2025-06-01 03:44:21] Usuario no encontrado: Raul usuyork
+[2025-06-01 03:44:40] === procesar_login.php llamado ===
+[2025-06-01 03:44:40] Usuario recibido: Raul usuyork
+[2025-06-01 03:44:40] Password recibido: vladyfemboy
+[2025-06-01 03:44:40] Contraseña desencriptada BD: vladyfemboy
+[2025-06-01 03:44:40] Contraseña correcta
+[2025-06-01 03:44:40] Sesión iniciada para usuario: Raul usuyork con rol usuario
+[2025-06-01 06:09:12] === procesar_login.php llamado ===
+[2025-06-01 06:09:12] Usuario recibido: adminCITO
+[2025-06-01 06:09:12] Password recibido: admin123
+[2025-06-01 06:09:12] Contraseña desencriptada y decodificada BD: 
+[2025-06-01 06:09:12] Contraseña incorrecta para usuario: adminCITO
+[2025-06-01 06:11:01] === procesar_login.php llamado ===
+[2025-06-01 06:11:01] Usuario recibido: adminCITO
+[2025-06-01 06:11:01] Password recibido: admin123
+[2025-06-01 06:11:01] Contraseña desencriptada y decodificada BD: 
+[2025-06-01 06:11:01] Contraseña incorrecta para usuario: adminCITO
+[2025-06-01 06:11:06] === procesar_login.php llamado ===
+[2025-06-01 06:11:06] Usuario recibido: adminCITO
+[2025-06-01 06:11:06] Password recibido: admin123
+[2025-06-01 06:11:06] Contraseña desencriptada y decodificada BD: 
+[2025-06-01 06:11:06] Contraseña incorrecta para usuario: adminCITO
+[2025-06-01 06:11:16] === procesar_login.php llamado ===
+[2025-06-01 06:11:16] Usuario recibido: adminCITO
+[2025-06-01 06:11:16] Password recibido: admin123
+[2025-06-01 06:11:16] Contraseña desencriptada y decodificada BD: 
+[2025-06-01 06:11:16] Contraseña incorrecta para usuario: adminCITO
+[2025-06-01 06:11:25] === procesar_login.php llamado ===
+[2025-06-01 06:11:25] Usuario recibido: adminCITO
+[2025-06-01 06:11:25] Password recibido: admin123
+[2025-06-01 06:11:25] Contraseña desencriptada y decodificada BD: 
+[2025-06-01 06:11:25] Contraseña incorrecta para usuario: adminCITO
+[2025-06-01 06:11:34] === procesar_login.php llamado ===
+[2025-06-01 06:11:34] Usuario recibido: adminCITO
+[2025-06-01 06:11:34] Password recibido: admin123
+[2025-06-01 06:11:34] Contraseña desencriptada y decodificada BD: 
+[2025-06-01 06:11:34] Contraseña incorrecta para usuario: adminCITO
+[2025-06-01 06:11:46] === procesar_login.php llamado ===
+[2025-06-01 06:11:46] Usuario recibido: adminCITO
+[2025-06-01 06:11:46] Password recibido: admin123
+[2025-06-01 06:11:46] Contraseña desencriptada y decodificada BD: 
+[2025-06-01 06:11:46] Contraseña incorrecta para usuario: adminCITO
+[2025-06-01 06:15:03] === procesar_login.php llamado ===
+[2025-06-01 06:15:03] Usuario recibido: adminCITO
+[2025-06-01 06:15:03] Login fallido para adminCITO
+[2025-06-01 06:15:17] === procesar_login.php llamado ===
+[2025-06-01 06:15:17] Usuario recibido: adminCITO
+[2025-06-01 06:15:17] Login fallido para adminCITO
+[2025-06-01 06:22:13] === procesar_login.php llamado ===
+[2025-06-01 06:22:13] Usuario recibido: adminCITO
+[2025-06-01 06:22:13] Contraseña ingresada: admin123
+[2025-06-01 06:22:13] Hash desde DB: $2y$10$RsfAKoJfaLGkaNnCkqkxEODDEc6yCm8XDqQ7plwGk/VPEGMUw91Hy
+[2025-06-01 06:22:13] Login fallido para adminCITO
+[2025-06-01 06:23:20] === procesar_login.php llamado ===
+[2025-06-01 06:23:20] Usuario recibido: adminCITO
+[2025-06-01 06:23:20] Contraseña ingresada: admin123
+[2025-06-01 06:23:20] Hash desde DB: $2y$10$vNO7syYQaoyeh.zdSmlKxO5kFhfRhmJJOKnZm3.HL7UuKCl74doIe
+[2025-06-01 06:23:20] Login fallido para adminCITO
+[2025-06-01 06:28:49] === procesar_login.php llamado ===
+[2025-06-01 06:28:49] Usuario recibido: adminCITO
+[2025-06-01 06:28:49] Contraseña ingresada: admin123
+[2025-06-01 06:28:49] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 06:28:49] Contraseña correcta para adminCITO
+[2025-06-01 06:28:49] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 06:53:34] === procesar_login.php llamado ===
+[2025-06-01 06:53:34] Usuario recibido: adminCITO
+[2025-06-01 06:53:34] Contraseña ingresada: admin123
+[2025-06-01 06:53:34] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 06:53:34] Contraseña correcta para adminCITO
+[2025-06-01 06:53:34] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 06:54:23] === procesar_login.php llamado ===
+[2025-06-01 06:54:23] Usuario recibido: adminCITO
+[2025-06-01 06:54:23] Contraseña ingresada: admin123
+[2025-06-01 06:54:23] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 06:54:23] Contraseña correcta para adminCITO
+[2025-06-01 06:54:23] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 07:13:05] === procesar_login.php llamado ===
+[2025-06-01 07:13:05] Usuario recibido: adminCITO
+[2025-06-01 07:13:05] Contraseña ingresada: admin123
+[2025-06-01 07:13:05] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 07:13:05] Contraseña correcta para adminCITO
+[2025-06-01 07:13:05] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 07:13:11] === procesar_login.php llamado ===
+[2025-06-01 07:13:11] Usuario recibido: adminCITO
+[2025-06-01 07:13:11] Contraseña ingresada: admin123
+[2025-06-01 07:13:11] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 07:13:11] Contraseña correcta para adminCITO
+[2025-06-01 07:13:11] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 07:13:14] === procesar_login.php llamado ===
+[2025-06-01 07:13:14] Usuario recibido: adminCITO
+[2025-06-01 07:13:14] Contraseña ingresada: admin1234
+[2025-06-01 07:13:14] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 07:13:14] Login fallido para adminCITO. Intento #1
+[2025-06-01 07:13:19] === procesar_login.php llamado ===
+[2025-06-01 07:13:19] Usuario recibido: adminCITO
+[2025-06-01 07:13:19] Contraseña ingresada: 12314
+[2025-06-01 07:13:19] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 07:13:19] Login fallido para adminCITO. Intento #2
+[2025-06-01 07:26:09] === procesar_login.php llamado ===
+[2025-06-01 07:26:09] Usuario recibido: adminCITO
+[2025-06-01 07:26:09] Contraseña ingresada: admin123
+[2025-06-01 07:26:09] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 07:26:09] Contraseña correcta para adminCITO
+[2025-06-01 07:26:09] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 07:34:12] === procesar_login.php llamado ===
+[2025-06-01 07:34:12] Usuario recibido: adminCITO
+[2025-06-01 07:34:12] Contraseña ingresada: admin123
+[2025-06-01 07:34:12] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 07:34:12] Contraseña correcta para adminCITO
+[2025-06-01 07:34:12] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 07:51:08] === procesar_login.php llamado ===
+[2025-06-01 07:51:08] Usuario recibido: adminCITO
+[2025-06-01 07:51:08] Contraseña ingresada: admin123
+[2025-06-01 07:51:08] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 07:51:08] Contraseña correcta para adminCITO
+[2025-06-01 07:51:08] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 08:07:33] === procesar_login.php llamado ===
+[2025-06-01 08:07:33] Usuario recibido: adminCITO
+[2025-06-01 08:07:33] Contraseña ingresada: admin123
+[2025-06-01 08:07:33] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 08:07:33] Contraseña correcta para adminCITO
+[2025-06-01 08:07:33] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 20:25:24] === procesar_login.php llamado ===
+[2025-06-01 20:25:24] Usuario recibido: adminCITO
+[2025-06-01 20:25:24] Contraseña ingresada: admin123
+[2025-06-01 20:25:24] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 20:25:24] Contraseña correcta para adminCITO
+[2025-06-01 20:25:24] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 20:34:33] === procesar_login.php llamado ===
+[2025-06-01 20:34:33] Usuario recibido: adminCITO
+[2025-06-01 20:34:33] Contraseña ingresada: admin123
+[2025-06-01 20:34:33] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 20:34:33] Contraseña correcta para adminCITO
+[2025-06-01 20:34:33] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1

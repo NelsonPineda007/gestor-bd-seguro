@@ -1,0 +1,169 @@
+[2025-06-01 08:07:29] Token eliminado de sesión
+[2025-06-01 08:07:29] Token generado
+Datos: {
+    "token_hash": "f071721173365545c0d2f1cbd4ad235e9d6be5f3709596f02904f4df5adf4dd6",
+    "expira": "2025-06-01 09:07:29"
+}
+[2025-06-01 08:07:33] Sesión iniciada
+Datos: {
+    "session_id": "9ofpamdpbcfr7vjshjpblruojb"
+}
+[2025-06-01 08:07:33] Token eliminado de sesión
+[2025-06-01 08:07:33] Token generado
+Datos: {
+    "token_hash": "e70e1cefa29fb7c811107597e241e022ba23b42cabf7f8431151568e87e1f16c",
+    "expira": "2025-06-01 09:07:33"
+}
+[2025-06-01 08:27:00] Sesión iniciada
+Datos: {
+    "session_id": "9ofpamdpbcfr7vjshjpblruojb"
+}
+[2025-06-01 08:27:00] Token eliminado de sesión
+[2025-06-01 08:27:00] Token generado
+Datos: {
+    "token_hash": "c3e06735ff5544753ed5c9e2aefb316d84f947593d300a03d2bd171fcbc558f2",
+    "expira": "2025-06-01 09:27:00"
+}
+[2025-06-01 08:28:22] Sesión iniciada
+Datos: {
+    "session_id": "9ofpamdpbcfr7vjshjpblruojb"
+}
+[2025-06-01 08:28:22] Token eliminado de sesión
+[2025-06-01 08:28:22] Token generado
+Datos: {
+    "token_hash": "63b6c7625ce39fc6a136f633c76f285e0c3418f7ea2d0ef3c59d0215887a2af9",
+    "expira": "2025-06-01 09:28:22"
+}
+[2025-06-01 08:29:36] Sesión iniciada
+Datos: {
+    "session_id": "9ofpamdpbcfr7vjshjpblruojb"
+}
+[2025-06-01 08:29:36] Token eliminado de sesión
+[2025-06-01 08:29:36] Token generado
+Datos: {
+    "token_hash": "ee092d5b59c0d4d8d175739babd2b5cdb6d7b6bab93d098b33f3de00247e08b6",
+    "expira": "2025-06-01 09:29:36"
+}
+[2025-06-01 08:29:49] Sesión iniciada
+Datos: {
+    "session_id": "9ofpamdpbcfr7vjshjpblruojb"
+}
+[2025-06-01 08:29:49] Token eliminado de sesión
+[2025-06-01 08:29:49] Token generado
+Datos: {
+    "token_hash": "2f2cf0a25ef82e1d2ca394da6f3cf94fd3d5043289d4e57668d1f231f44c9ecd",
+    "expira": "2025-06-01 09:29:49"
+}
+[2025-06-01 19:57:37] Token generado
+Datos: {
+    "token_hash": "9ba86a3d48b457bcd96594512434a4e41212124ef94cebb9d6e30ec5313d362f",
+    "expira": "2025-06-01 20:57:37"
+}
+[2025-06-01 19:57:43] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 19:57:43] Token eliminado de sesión
+[2025-06-01 19:57:43] Token generado
+Datos: {
+    "token_hash": "6c4795178232abb2c48599dfac0fffcd4502162a81ce902d841c9ae9571cab78",
+    "expira": "2025-06-01 20:57:43"
+}
+[2025-06-01 20:01:29] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 20:01:29] Token eliminado de sesión
+[2025-06-01 20:01:29] Token generado
+Datos: {
+    "token_hash": "0db11c93718831850d40d5a24c13d22fa92d17c62a39afb2329eb57762f0f2d5",
+    "expira": "2025-06-01 21:01:29"
+}
+[2025-06-01 20:04:38] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 20:04:38] Token eliminado de sesión
+[2025-06-01 20:04:38] Token generado
+Datos: {
+    "token_hash": "a66ec98b4fef4920903214dc847e196a257563d3d8e7785a4f6f8357806894f3",
+    "expira": "2025-06-01 21:04:38"
+}
+[2025-06-01 20:05:53] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 20:05:53] Token eliminado de sesión
+[2025-06-01 20:05:53] Token generado
+Datos: {
+    "token_hash": "6c9a3260c8978b1cb70835f952bbd714f7b2d4c95b2968a8513b3bd925215aab",
+    "expira": "2025-06-01 21:05:53"
+}
+[2025-06-01 20:06:18] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 20:06:18] Token eliminado de sesión
+[2025-06-01 20:06:18] Token generado
+Datos: {
+    "token_hash": "1653bf43c5ab5b9563f0e2ff36e39adc1eef76ee1ef516b1547eee2af8f7ca6f",
+    "expira": "2025-06-01 21:06:18"
+}
+[2025-06-01 20:06:37] Token eliminado de sesión
+[2025-06-01 20:06:37] Token generado
+Datos: {
+    "token_hash": "45e9ff32b315a9b165f6e60c5ef8a4a97bbfe7ea07f8595d22891c352187d9d4",
+    "expira": "2025-06-01 21:06:37"
+}
+[2025-06-01 20:19:14] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 20:19:14] Token eliminado de sesión
+[2025-06-01 20:19:14] Token generado
+Datos: {
+    "token_hash": "40d036f99b0d9bf8b402a06fd895bbb8f79efcff42fcdef09e1ab6d01f66bb4b",
+    "expira": "2025-06-01 21:19:14"
+}
+[2025-06-01 20:21:05] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 20:21:05] Token eliminado de sesión
+[2025-06-01 20:21:05] Token generado
+Datos: {
+    "token_hash": "6dd67dadcba8cfb1aa5d35332fdab29370de8576ea0ff4d7d40fe455551d2cd0",
+    "expira": "2025-06-01 21:21:05"
+}
+[2025-06-01 20:25:20] Token eliminado de sesión
+[2025-06-01 20:25:20] Token generado
+Datos: {
+    "token_hash": "f4284bd66b086d2bbf2307ffd18aec0fb0bb267c3ec1c910ccd409dd80177bb2",
+    "expira": "2025-06-01 21:25:20"
+}
+[2025-06-01 20:25:24] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 20:25:24] Token eliminado de sesión
+[2025-06-01 20:25:24] Token generado
+Datos: {
+    "token_hash": "19fe1505f100007669e223731a7677dacccedb26568df57946db0eecf60ad69a",
+    "expira": "2025-06-01 21:25:24"
+}
+[2025-06-01 20:33:57] Token eliminado de sesión
+[2025-06-01 20:33:57] Token generado
+Datos: {
+    "token_hash": "af8b6be27db07f33a75adccc768c9430ea2f16be550a222321bbbc0b8787e536",
+    "expira": "2025-06-01 21:33:57"
+}
+[2025-06-01 20:34:33] Sesión iniciada
+Datos: {
+    "session_id": "t2neupknd181oq2a02fkust7t6"
+}
+[2025-06-01 20:34:33] Token eliminado de sesión
+[2025-06-01 20:34:33] Token generado
+Datos: {
+    "token_hash": "92788fd1eedd6522d640e461a20f1ba926485dd15debc5213630487628ae9f6d",
+    "expira": "2025-06-01 21:34:33"
+}
