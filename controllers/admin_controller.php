@@ -34,21 +34,22 @@ class AdminController
     public function getUsuariosConRoles($limit = 3, $offset = 0)
     {
         $query = "SELECT 
-                u.id, 
-                u.nombre_usuario,
-                u.nombre_completo,
-                u.correo,
-                r.nombre as rol,
-                AES_DECRYPT(u.telefono, 'llave_secreta') as telefono,
-                CONCAT(
-                    SUBSTRING(AES_DECRYPT(u.DUI, 'llave_secreta'), 1, 8),
-                    '-',
-                    SUBSTRING(AES_DECRYPT(u.DUI, 'llave_secreta'), 9, 1)
-                ) as DUI
-              FROM usuarios u
-              JOIN roles r ON u.id_rol = r.id
-              ORDER BY u.id ASC
-              LIMIT :limit OFFSET :offset";
+            u.id, 
+            u.nombre_usuario,
+            u.nombre_completo,
+            u.correo,
+            u.estado,
+            r.nombre as rol,
+            AES_DECRYPT(u.telefono, 'llave_secreta') as telefono,
+            CONCAT(
+                SUBSTRING(AES_DECRYPT(u.DUI, 'llave_secreta'), 1, 8),
+                '-',
+                SUBSTRING(AES_DECRYPT(u.DUI, 'llave_secreta'), 9, 1)
+            ) as DUI
+          FROM usuarios u
+          JOIN roles r ON u.id_rol = r.id
+          ORDER BY u.id ASC
+          LIMIT :limit OFFSET :offset";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -218,6 +219,14 @@ class AdminController
                 $params[':nombre_usuario'] = $data['nombre_usuario'];
             }
 
+            if (!empty($data['estado'])) {
+                if (!in_array($data['estado'], ['activo', 'inactivo'])) {
+                    throw new Exception("Estado no válido");
+                }
+                $updateFields[] = "estado = :estado";
+                $params[':estado'] = $data['estado'];
+            }
+
             if (!empty($data['contrasena'])) {
                 $hashedPassword = password_hash($data['contrasena'], PASSWORD_BCRYPT);
                 if (!$hashedPassword) {
@@ -264,11 +273,20 @@ class AdminController
             if (empty($updateFields)) {
                 throw new Exception("No se proporcionaron datos para actualizar");
             }
+            $isCurrentUser = ($data['id'] == ($_SESSION['user_id'] ?? null));
+
+
 
             // Construir la consulta SQL
             $query = "UPDATE usuarios SET " . implode(', ', $updateFields) . " WHERE id = :id";
             $stmt = $this->pdo->prepare($query);
             $stmt->execute($params);
+
+            // Si es el usuario actual, actualizar la sesión
+            if ($isCurrentUser && !empty($data['nombre_completo'])) {
+                $_SESSION['nombre_completo'] = $data['nombre_completo'];
+                error_log("Sesión actualizada para usuario: " . $data['nombre_completo']);
+            }
 
             // Registrar acción de auditoría
             $this->logCustomAction('USER_UPDATE', 'Actualización de usuario ID: ' . $data['id']);
@@ -320,20 +338,21 @@ class AdminController
     }
 
     // Métodos para la vista
-public function getIniciales($nombreCompleto) {
-    $iniciales = '';
-    $partesNombre = preg_split('/\s+/', trim($nombreCompleto));
-    
-    // Tomar primera letra de cada parte (máximo 2)
-    foreach ($partesNombre as $parte) {
-        if (!empty($parte)) {
-            $iniciales .= strtoupper(substr($parte, 0, 1));
-            if (strlen($iniciales) >= 2) break;
+    public function getIniciales($nombreCompleto)
+    {
+        $iniciales = '';
+        $partesNombre = preg_split('/\s+/', trim($nombreCompleto));
+
+        // Tomar primera letra de cada parte (máximo 2)
+        foreach ($partesNombre as $parte) {
+            if (!empty($parte)) {
+                $iniciales .= strtoupper(substr($parte, 0, 1));
+                if (strlen($iniciales) >= 2) break;
+            }
         }
+
+        return $iniciales ?: 'US'; // Default si no hay nombre
     }
-    
-    return $iniciales ?: 'US'; // Default si no hay nombre
-}
 
     public function getColorAvatar($rol)
     {
@@ -481,7 +500,180 @@ public function getIniciales($nombreCompleto) {
             error_log("Error logging error: " . $ex->getMessage());
         }
     }
+
+
+    public function getUsuariosParaRoles()
+    {
+        $query = "SELECT 
+                u.id, 
+                u.nombre_usuario,
+                u.nombre_completo,
+                r.nombre as rol
+              FROM usuarios u
+              JOIN roles r ON u.id_rol = r.id
+              WHERE u.estado = 'activo'
+              ORDER BY u.nombre_completo ASC";
+
+        $stmt = $this->pdo->query($query);
+        return ['usuarios' => $stmt->fetchAll(PDO::FETCH_ASSOC)];
+    }
+
+    public function asignarRol($data)
+    {
+        try {
+            // Validar campos requeridos
+            if (empty($data['user_id'])) {
+                throw new Exception("Debe seleccionar un usuario");
+            }
+
+            if (empty($data['role_id'])) {
+                throw new Exception("Debe seleccionar un rol");
+            }
+
+            // Verificar si el usuario existe
+            $stmt = $this->pdo->prepare("SELECT id FROM usuarios WHERE id = ?");
+            $stmt->execute([$data['user_id']]);
+            if (!$stmt->fetch()) {
+                throw new Exception("El usuario seleccionado no existe");
+            }
+
+            // Verificar si el rol existe
+            $stmt = $this->pdo->prepare("SELECT id FROM roles WHERE id = ?");
+            $stmt->execute([$data['role_id']]);
+            if (!$stmt->fetch()) {
+                throw new Exception("El rol seleccionado no existe");
+            }
+
+            // Establecer contexto de auditoría
+            $this->setAuditContext();
+
+            // Obtener información actual del usuario para el log
+            $stmt = $this->pdo->prepare("SELECT nombre_usuario, id_rol FROM usuarios WHERE id = ?");
+            $stmt->execute([$data['user_id']]);
+            $usuarioActual = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Actualizar el rol
+            $query = "UPDATE usuarios SET id_rol = :role_id WHERE id = :user_id";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([
+                ':role_id' => $data['role_id'],
+                ':user_id' => $data['user_id']
+            ]);
+
+            // Registrar acción de auditoría
+            $this->logCustomAction(
+                'ROLE_ASSIGN',
+                "Cambio de rol para usuario {$usuarioActual['nombre_usuario']} " .
+                    "(de {$usuarioActual['id_rol']} a {$data['role_id']})"
+            );
+
+            return ['success' => true, 'message' => 'Rol asignado correctamente'];
+        } catch (PDOException $e) {
+            $this->logError($e);
+            return ['success' => false, 'message' => 'Error en la base de datos: ' . $e->getMessage()];
+        } catch (Exception $e) {
+            $this->logError($e);
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
+
+    // En AdminController.php
+    // Tabla auditoria y paginacion
+
+    public function getAuditLogs($limit = 5, $offset = 0)
+    {
+        $query = "SELECT 
+                a.id,
+                a.fecha,
+                a.usuario_sesion,
+                a.operacion,
+                a.tabla_afectada,
+                r.nombre as rol_usuario
+              FROM auditoria a
+              LEFT JOIN usuarios u ON a.id_usuario = u.id
+              LEFT JOIN roles r ON u.id_rol = r.id
+              ORDER BY a.fecha DESC
+              LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTotalAuditLogs()
+    {
+        $query = "SELECT COUNT(*) as total FROM auditoria";
+        $stmt = $this->pdo->query($query);
+        return $stmt->fetchColumn();
+    }
+    public function exportAuditLogs()
+    {
+        try {
+            $query = "SELECT * FROM auditoria ORDER BY fecha DESC";
+            $stmt = $this->pdo->query($query);
+            $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $exportDir = __DIR__ . 'auditoria_usuarios/';
+
+            // Verificar/Crear directorio con más detalles de error
+            if (!file_exists($exportDir)) {
+                if (!mkdir($exportDir, 0755, true)) {
+                    $error = error_get_last();
+                    throw new Exception("No se pudo crear directorio: " . ($error['message'] ?? 'Error desconocido'));
+                }
+            }
+
+            // Verificar permisos de escritura
+            if (!is_writable($exportDir)) {
+                throw new Exception("El directorio no tiene permisos de escritura");
+            }
+
+            $filename = 'auditoria_' . date('Y-m-d_His') . '.json';
+            $filepath = $exportDir . $filename;
+
+            $json = json_encode($logs, JSON_PRETTY_PRINT);
+            if ($json === false) {
+                throw new Exception("Error JSON: " . json_last_error_msg());
+            }
+
+            // Intenta escribir el archivo
+            $bytesWritten = file_put_contents($filepath, $json);
+            if ($bytesWritten === false) {
+                throw new Exception("No se pudo escribir el archivo");
+            }
+
+            // Verificar que el archivo existe y tiene contenido
+            if (!file_exists($filepath) || filesize($filepath) === 0) {
+                throw new Exception("El archivo no se creó correctamente");
+            }
+
+            return [
+                'success' => true,
+                'filename' => $filename,
+                'filepath' => $filepath,
+                'message' => 'Archivo exportado correctamente'
+            ];
+        } catch (Exception $e) {
+            // Registrar el error completo
+            error_log("ERROR EN EXPORT AUDIT: " . $e->getMessage() . "\n" . $e->getTraceAsString());
+            return [
+                'success' => false,
+                'message' => 'Error al generar archivo: ' . $e->getMessage(),
+                'debug' => [
+                    'dir' => $exportDir,
+                    'filepath' => $filepath ?? 'no definido',
+                    'php_user' => get_current_user(),
+                    'perms' => file_exists($exportDir) ? substr(sprintf('%o', fileperms($exportDir)), -4) : 'no existe'
+                ]
+            ];
+        }
+    }
 }
+
+
 
 // Manejo de las solicitudes AJAX
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
@@ -508,6 +700,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])) {
             header('Content-Type: application/json');
             echo json_encode($roles);
             exit;
+
+            // En el switch GET:
+        case 'getUsuariosParaRoles':
+            $usuarios = $controller->getUsuariosParaRoles();
+            header('Content-Type: application/json');
+            echo json_encode($usuarios);
+            exit;
+
+        case 'getAuditLogs':
+            $pagina = $_GET['pagina'] ?? 1;
+            $porPagina = $_GET['porPagina'] ?? 5;
+            $offset = ($pagina - 1) * $porPagina;
+
+            $logs = $controller->getAuditLogs($porPagina, $offset);
+            $total = $controller->getTotalAuditLogs();
+
+            header('Content-Type: application/json');
+            echo json_encode([
+                'logs' => $logs,
+                'total' => $total
+            ]);
+            exit;
+
+        case 'exportAuditLogs':
+            $result = $controller->exportAuditLogs();
+            header('Content-Type: application/json');
+            echo json_encode($result);
+            exit;
+
     }
 }
 
@@ -526,6 +747,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
 
         case 'deleteUsuario':
             echo json_encode($controller->deleteUsuario($input['id']));
+            exit;
+            // En el switch POST:
+        case 'asignarRol':
+            echo json_encode($controller->asignarRol($input));
             exit;
     }
 }
