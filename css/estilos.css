@@ -1,28 +1,51 @@
 /* Estilos generales */
-    body {
-        font-family: "Poppins", sans-serif;
-    }
+body {
+    font-family: "Poppins", sans-serif;
+}
 
-    /* Scrollbar minimal dark */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
+/* Scrollbar minimal dark */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
 
-    ::-webkit-scrollbar-track {
-        background: #1f2937;
-    }
+::-webkit-scrollbar-track {
+    background: #1f2937;
+}
 
-    ::-webkit-scrollbar-thumb {
-        background-color: #f97316;
-        border-radius: 10px;
-        border: 2px solid #1f2937;
-    }
+::-webkit-scrollbar-thumb {
+    background-color: #f97316;
+    border-radius: 10px;
+    border: 2px solid #1f2937;
+}
 
-    /* Smooth scroll */
-    html {
-        scroll-behavior: smooth;
-    }
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
 
 
-    
+/* En tu archivo CSS o dentro de <style> */
+.badge-insert {
+    background-color: #166534;
+    /* verde oscuro */
+    color: #dcfce7;
+}
+
+.badge-update {
+    background-color: #854d0e;
+    /* amarillo oscuro */
+    color: #fef08a;
+}
+
+.badge-delete {
+    background-color: #991b1b;
+    /* rojo oscuro */
+    color: #fee2e2;
+}
+
+.badge-login {
+    background-color: #1e40af;
+    /* azul oscuro */
+    color: #dbeafe;
+}

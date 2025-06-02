@@ -421,3 +421,135 @@ Contraseña correcta
     [csrf_token_expire] => 1748835298
 )
 
+[2025-06-02 05:03:04] === Intento de login ===
+[2025-06-02 05:03:04] Usuario recibido: adminCITO
+[2025-06-02 05:03:04] Datos obtenidos de BD: Array
+(
+    [id] => 1
+    [nombre_usuario] => adminCITO
+    [contrasena] => $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+    [nombre_completo] => Jaime TV
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 05:03:04] Login exitoso para: adminCITO (ID: 1)
+[2025-06-02 05:03:04] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [user_id] => 1
+    [username] => adminCITO
+    [nombre_completo] => Jaime TV
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 1
+            [nombre_usuario] => adminCITO
+            [rol] => administrador
+        )
+
+    [csrf_token] => 493d114004feb9d119e51fae2a205dd662d82c8b6fdf74f87a6ca98e44fba17d
+    [csrf_token_expire] => 1748836980
+)
+
+[2025-06-02 05:03:44] === Intento de login ===
+[2025-06-02 05:03:44] Usuario recibido: adminCITO
+[2025-06-02 05:03:44] Datos obtenidos de BD: Array
+(
+    [id] => 1
+    [nombre_usuario] => adminCITO
+    [contrasena] => $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+    [nombre_completo] => Jaime TV
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 05:03:44] Login exitoso para: adminCITO (ID: 1)
+[2025-06-02 05:03:44] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [user_id] => 1
+    [username] => adminCITO
+    [nombre_completo] => Jaime TV
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 1
+            [nombre_usuario] => adminCITO
+            [rol] => administrador
+        )
+
+    [csrf_token] => 54ea3b3cab65116c4215cb27e6df77b38153b14e905812679223d0037d4db2e5
+    [csrf_token_expire] => 1748836984
+)
+
+[2025-06-02 05:06:30] === Intento de login ===
+[2025-06-02 05:06:30] Usuario recibido: Nelton
+[2025-06-02 05:06:30] Datos obtenidos de BD: Array
+(
+    [id] => 14
+    [nombre_usuario] => Nelton
+    [contrasena] => $2y$10$Fwh728A7oZTYTb0oBUrq7.1IK6GKzMDmcevRzuBJnForE.G1ukKyC
+    [nombre_completo] => Nelson Pineda
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 05:06:30] Login exitoso para: Nelton (ID: 14)
+[2025-06-02 05:06:30] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [user_id] => 14
+    [username] => Nelton
+    [nombre_completo] => Nelson Pineda
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 14
+            [nombre_usuario] => Nelton
+            [rol] => administrador
+        )
+
+    [csrf_token] => 5a7611d8e16a8f74fcabf01f05bb0cf471f7931f59c07fdbf461237b5779f909
+    [csrf_token_expire] => 1748837024
+)
+
+[2025-06-02 05:55:14] === Intento de login ===
+[2025-06-02 05:55:14] Usuario recibido: Nelton
+[2025-06-02 05:55:14] Datos obtenidos de BD: Array
+(
+    [id] => 14
+    [nombre_usuario] => Nelton
+    [contrasena] => $2y$10$Fwh728A7oZTYTb0oBUrq7.1IK6GKzMDmcevRzuBJnForE.G1ukKyC
+    [nombre_completo] => Nelson Peña 
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 05:55:14] Login exitoso para: Nelton (ID: 14)
+[2025-06-02 05:55:14] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [user_id] => 14
+    [username] => Nelton
+    [nombre_completo] => Nelson Peña 
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 14
+            [nombre_usuario] => Nelton
+            [rol] => administrador
+        )
+
+    [csrf_token] => e3df82fd5a49a5418780bfc471c76cf173b3b4f86930ea2c3e7ad3789bbf7f18
+    [csrf_token_expire] => 1748840108
+)
+

@@ -16,14 +16,14 @@ if (!isset($_SESSION['intentos_login'])) {
 }
 
 // Verificar intentos fallidos
-if ($_SESSION['intentos_login'] > 3) {
+/*if ($_SESSION['intentos_login'] > 3) {
     $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     escribir_log("Demasiados intentos fallidos desde IP: $ip");
     $_SESSION['error'] = "Demasiados intentos fallidos. Intente más tarde.";
     header("Location: ../index.php");
     exit();
 }
-
+*/
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /** ───── 1. Datos del formulario ───── */
     $usuario  = trim($_POST['usuario'] ?? '');
