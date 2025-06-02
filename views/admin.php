@@ -3,9 +3,41 @@ require_once '../core/db.php';
 require_once '../controllers/admin_controller.php';
 require_once __DIR__ . '/../core/CSRF.php';
 
+// Verificar sesión primero
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../index.php');
+    exit();
+}
+
+// Crear controlador y obtener datos
+try {
+    $controller = new AdminController();
+
+    // Obtener datos del usuario actual
+    $nombreUsuario = $_SESSION['nombre_completo'] ?? 'Usuario';
+    $rolUsuario = $_SESSION['rol'] ?? 'Rol no definido';
+
+    // Generar iniciales
+    $iniciales = $controller->getIniciales($nombreUsuario);
+
+    // Obtener última actividad
+    $ultimaActividad = $controller->getUltimaActividadDetallada($_SESSION['user_id']);
+} catch (Exception $e) {
+    error_log("Error: " . $e->getMessage());
+    $iniciales = 'ER';
+    $ultimaActividad = null;
+}
+
+// Crear instancia del controlador
+$controller = new AdminController();
+
+// Ahora sí obtener la última actividad
+$ultimaActividad = $controller->getUltimaActividadDetallada($_SESSION['user_id']);
 $adminController = new AdminController();
 $usuarios = $adminController->getUsuariosConRoles();
 $csrfToken = CSRF::generarToken();
+
 
 $paginaActual = $_GET['pagina'] ?? 1;
 $usuariosPorPagina = 3;
@@ -27,8 +59,11 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="../css/estilos.css">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../scripts/AlertComponent.js"></script>
+    <script src="../scripts/admin.js"></script>
 </head>
 
 <body class="bg-gray-900 text-gray-300 min-h-screen flex flex-col">
@@ -75,86 +110,129 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
 
         <div class="flex flex-1 overflow-hidden">
             <!-- Sidebar -->
-            <aside class="bg-gray-800 w-64 p-6 flex flex-col justify-between sticky top-16 h-[calc(100vh-64px)] overflow-y-auto sidebar">
-                <div>
-                    <div class="mb-8">
-                        <div class="flex items-center space-x-3 mb-4">
-                            <div class="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center">
-                                <i class="fas fa-user text-orange-500"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium">María Gómez</p>
-                                <p class="text-xs text-orange-500">Administrador</p>
-                            </div>
-                        </div>
-                        <div class="bg-gray-700 rounded-lg p-3 text-center">
-                            <p class="text-xs text-gray-400">Última actividad</p>
-                            <p class="text-sm">Hoy 14:30</p>
-                        </div>
-                    </div>
-
-                    <h2 class="text-gray-400 uppercase tracking-widest text-xs mb-4">Navegación</h2>
-                    <ul class="space-y-2">
-                        <li>
-                            <a href="#usuarios" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-users text-orange-500 w-5"></i>
-                                <span>Gestionar usuarios</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#roles" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-user-shield text-orange-500 w-5"></i>
-                                <span>Asignar roles</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#crear-backup" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-box text-orange-500 w-5"></i>
-                                <span>Crear backups</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#restaurar-backup" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-save text-orange-500 w-5"></i>
-                                <span>Restaurar backups</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#registros" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-file-alt text-orange-500 w-5"></i>
-                                <span>Consultar registros</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#estadisticas" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-chart-bar text-orange-500 w-5"></i>
-                                <span>Estadísticas</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#datos-sensibles" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-dna text-orange-500 w-5"></i>
-                                <span>Datos sensibles</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#configuraciones" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-cogs text-orange-500 w-5"></i>
-                                <span>Configuraciones</span>
-                            </a>
-                        </li>
-                    </ul>
+<aside class="bg-gray-800 w-64 p-4 flex flex-col justify-between sticky top-16 h-[calc(100vh-64px)] overflow-y-auto sidebar">
+    <div>
+        <!-- Contenedor unificado para usuario + actividad -->
+        <div class="bg-gray-700/80 rounded-lg p-4 mb-6 border border-gray-600 shadow-sm">
+            <!-- Bloque compacto de usuario -->
+            <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-600/50">
+                <div class="h-10 w-10 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white font-bold text-sm">
+                    <?= $iniciales ?>
                 </div>
-                <div class="mt-8">
-                    <h2 class="text-gray-400 uppercase tracking-widest text-xs mb-4">Cuenta</h2>
-                    <ul class="space-y-2">
+                <div class="flex-1 min-w-0">
+                    <p class="font-medium text-white text-sm truncate"><?= htmlspecialchars($nombreUsuario) ?></p>
+                    <p class="text-xs text-amber-400/90 truncate"><?= ucfirst(htmlspecialchars($rolUsuario)) ?></p>
+                </div>
+            </div>
+            
+            <!-- Bloque integrado de actividad -->
+            <div>
+                <p class="text-xs text-gray-300/80 uppercase tracking-wider font-medium mb-2 flex items-center gap-2">
+                    <i class="fas fa-clock text-orange-400 text-xs"></i>
+                    Última actividad
+                </p>
+                <div class="space-y-1 pl-5">
+                    <?php if ($ultimaActividad): ?>
+                        <p class="text-sm text-white flex items-center gap-1.5">
+                            <span class="font-medium text-orange-300"><?= $ultimaActividad['dia'] ?></span>
+                            <span class="text-gray-400">•</span>
+                            <span class="text-amber-200"><?= $ultimaActividad['hora'] ?></span>
+                        </p>
+                        <p class="text-xs text-gray-300">
+                            <span class="text-gray-400">Acción:</span> 
+                            <span class="text-blue-300"><?= $ultimaActividad['accion'] ?></span>
+                        </p>
+                        <?php if ($ultimaActividad['tabla_afectada'] != 'sistema'): ?>
+                            <p class="text-xs text-gray-300">
+                                <span class="text-gray-400">Tabla:</span> 
+                                <span class="text-purple-300"><?= $ultimaActividad['tabla_afectada'] ?></span>
+                            </p>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <p class="text-sm text-gray-400 italic flex items-center gap-2">
+                            <i class="fas fa-bed text-gray-500 text-xs"></i>
+                            Sin actividad reciente
+                        </p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú de Navegación (se mantiene igual) -->
+        <h2 class="text-gray-400 uppercase tracking-widest text-xs mb-4 flex items-center">
+            <i class="fas fa-compass text-gray-500 mr-2"></i> Navegación
+        </h2>
+        <ul class="space-y-2">
+            <li>
+                <a href="#usuarios" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                    <i class="fas fa-users text-orange-500 w-5 group-hover:text-orange-400"></i>
+                    <span class="group-hover:text-white">Gestionar usuarios</span>
+                </a>
+            </li>
                         <li>
-                            <a href="#perfil" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition">
-                                <i class="fas fa-user-circle text-orange-500 w-5"></i>
-                                <span>Mi perfil</span>
+                            <a href="#roles" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                                <i class="fas fa-user-shield text-orange-500 w-5 group-hover:text-orange-400"></i>
+                                <span class="group-hover:text-white">Asignar roles</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#crear-backup" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                                <i class="fas fa-box text-orange-500 w-5 group-hover:text-orange-400"></i>
+                                <span class="group-hover:text-white">Crear backups</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#restaurar-backup" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                                <i class="fas fa-save text-orange-500 w-5 group-hover:text-orange-400"></i>
+                                <span class="group-hover:text-white">Restaurar backups</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#registros" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                                <i class="fas fa-file-alt text-orange-500 w-5 group-hover:text-orange-400"></i>
+                                <span class="group-hover:text-white">Consultar registros</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#estadisticas" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                                <i class="fas fa-chart-bar text-orange-500 w-5 group-hover:text-orange-400"></i>
+                                <span class="group-hover:text-white">Estadísticas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#datos-sensibles" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                                <i class="fas fa-dna text-orange-500 w-5 group-hover:text-orange-400"></i>
+                                <span class="group-hover:text-white">Datos sensibles</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#configuraciones" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                                <i class="fas fa-cogs text-orange-500 w-5 group-hover:text-orange-400"></i>
+                                <span class="group-hover:text-white">Configuraciones</span>
                             </a>
                         </li>
                     </ul>
+
+                    <!-- Sección de Cuenta -->
+                    <div class="mt-8">
+                        <h2 class="text-gray-400 uppercase tracking-widest text-xs mb-4 flex items-center">
+                            <i class="fas fa-user-circle text-gray-500 mr-2"></i> Cuenta
+                        </h2>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="#perfil" class="flex items-center space-x-3 text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-lg transition group">
+                                    <i class="fas fa-user-edit text-orange-500 w-5 group-hover:text-orange-400"></i>
+                                    <span class="group-hover:text-white">Mi perfil</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#logout" class="flex items-center space-x-3 text-gray-300 hover:bg-red-900/50 px-3 py-2 rounded-lg transition group">
+                                    <i class="fas fa-sign-out-alt text-red-400 w-5 group-hover:text-red-300"></i>
+                                    <span class="group-hover:text-white">Cerrar sesión</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </aside>
 
@@ -180,7 +258,7 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
                     <div class="bg-gray-800 rounded-xl shadow-inner overflow-hidden">
                         <div class="overflow-x-auto">
                             <!-- tabla Usuario con sus CRUD -->
-                            <table class="w-full text-left">
+                            <table id="tabla-usuarios" class="w-full text-left">
                                 <thead class="bg-gray-700">
                                     <tr>
                                         <th class="py-4 px-6 font-medium">Nombre</th>
@@ -207,11 +285,13 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
                                                 <?= $adminController->getBadgeRol($usuario['rol']) ?>
                                             </td>
                                             <td class="py-4 px-6 text-center space-x-2">
+                                                <!-- Boton de modificar del modal -->
                                                 <button
                                                     data-user='<?= json_encode($usuario) ?>'
                                                     class="modifyBtn bg-orange-600 hover:bg-orange-700 text-white px-3 py-1 rounded-md text-xs font-semibold transition">
                                                     <i class="fas fa-edit mr-1"></i> Modificar
                                                 </button>
+                                                <!-- Boton de eliminar del modal -->
                                                 <button
                                                     data-id="<?= $usuario['id'] ?>"
                                                     class="deleteBtn bg-red-700 hover:bg-red-600 text-white px-3 py-1 rounded-md text-xs font-semibold transition">
@@ -224,55 +304,59 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
                             </table>
                         </div>
                         <div class="bg-gray-700 px-6 py-3 flex justify-between items-center">
+                            <!-- Muestra el total de usuarios que hay en la base de datos -->
                             <span class="text-sm text-gray-400">Mostrando <?= count($usuarios) ?> de <?= $totalUsuarios ?> usuarios</span>
-                            <div class="flex space-x-2">
-                                <!-- Botón Anterior -->
-                                <?php if ($paginaActual > 1): ?>
-                                    <a href="?pagina=<?= $paginaActual - 1 ?>" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 rounded-md">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </a>
-                                <?php else: ?>
-                                    <button class="bg-gray-600 text-gray-300 p-1 rounded-md disabled" disabled>
-                                        <i class="fas fa-chevron-left"></i>
-                                    </button>
-                                <?php endif; ?>
+                            <div id="pagination-container" class="mt-4">
+                                <div class="flex space-x-2">
+                                    <!-- Botón Anterior -->
+                                    <?php if ($paginaActual > 1): ?>
+                                        <a href="?pagina=<?= $paginaActual - 1 ?>" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 rounded-md">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    <?php else: ?>
+                                        <button class="bg-gray-600 text-gray-300 p-1 rounded-md disabled" disabled>
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                    <?php endif; ?>
 
-                                <!-- Números de página -->
-                                <?php
-                                $paginasAMostrar = 3; // Número de páginas a mostrar alrededor de la actual
-                                $inicio = max(1, $paginaActual - $paginasAMostrar);
-                                $fin = min($totalPaginas, $paginaActual + $paginasAMostrar);
+                                    <!-- Números de página -->
+                                    <?php
+                                    $paginasAMostrar = 3; // Número de páginas a mostrar alrededor de la actual
+                                    $inicio = max(1, $paginaActual - $paginasAMostrar);
+                                    $fin = min($totalPaginas, $paginaActual + $paginasAMostrar);
 
-                                if ($inicio > 1) {
-                                    echo '<a href="?pagina=1" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">1</a>';
-                                    if ($inicio > 2) echo '<span class="px-2">...</span>';
-                                }
+                                    if ($inicio > 1) {
+                                        echo '<a href="?pagina=1" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">1</a>';
+                                        if ($inicio > 2) echo '<span class="px-2">...</span>';
+                                    }
 
-                                for ($i = $inicio; $i <= $fin; $i++): ?>
-                                    <a href="?pagina=<?= $i ?>" class="<?= $i == $paginaActual ? 'bg-orange-600 text-white' : 'bg-gray-600 hover:bg-gray-500 text-gray-300' ?> p-1 px-2 rounded-md">
-                                        <?= $i ?>
-                                    </a>
-                                <?php endfor;
+                                    for ($i = $inicio; $i <= $fin; $i++): ?>
+                                        <a href="?pagina=<?= $i ?>" class="<?= $i == $paginaActual ? 'bg-orange-600 text-white' : 'bg-gray-600 hover:bg-gray-500 text-gray-300' ?> p-1 px-2 rounded-md">
+                                            <?= $i ?>
+                                        </a>
+                                    <?php endfor;
 
-                                if ($fin < $totalPaginas) {
-                                    if ($fin < $totalPaginas - 1) echo '<span class="px-2">...</span>';
-                                    echo '<a href="?pagina=' . $totalPaginas . '" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">' . $totalPaginas . '</a>';
-                                }
-                                ?>
+                                    if ($fin < $totalPaginas) {
+                                        if ($fin < $totalPaginas - 1) echo '<span class="px-2">...</span>';
+                                        echo '<a href="?pagina=' . $totalPaginas . '" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 px-2 rounded-md">' . $totalPaginas . '</a>';
+                                    }
+                                    ?>
 
-                                <!-- Botón Siguiente -->
-                                <?php if ($paginaActual < $totalPaginas): ?>
-                                    <a href="?pagina=<?= $paginaActual + 1 ?>" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 rounded-md">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </a>
-                                <?php else: ?>
-                                    <button class="bg-gray-600 text-gray-300 p-1 rounded-md disabled" disabled>
-                                        <i class="fas fa-chevron-right"></i>
-                                    </button>
-                                <?php endif; ?>
+                                    <!-- Botón Siguiente -->
+                                    <?php if ($paginaActual < $totalPaginas): ?>
+                                        <a href="?pagina=<?= $paginaActual + 1 ?>" class="bg-gray-600 hover:bg-gray-500 text-gray-300 p-1 rounded-md">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    <?php else: ?>
+                                        <button class="bg-gray-600 text-gray-300 p-1 rounded-md disabled" disabled>
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Modal Creacion boton -->
                     <button id="openModalBtn" class="mt-6 bg-orange-600 hover:bg-orange-700 text-white px-5 py-2 rounded-md font-semibold transition flex items-center" type="button">
                         <i class="fas fa-plus mr-2"></i> Crear nuevo usuario
                     </button>
@@ -656,8 +740,8 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
                 <!-- Modal backdrop -->
                 <div id="modalBackdrop" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm hidden z-40"></div>
 
-                <!-- Crear Modal -->
-                <div id="modalCrear" class="fixed inset-0 flex items-center justify-center p-6 hidden z-50">
+                <!-- Modal Creación de Usuario -->
+                <div id="modalCrear" class="fixed inset-0 flex items-center justify-center p-6 hidden z-50 bg-black bg-opacity-50">
                     <div class="bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative">
                         <button id="closeModalCrearBtn" aria-label="Cerrar modal" class="absolute top-3 right-3 text-gray-400 hover:text-orange-500 text-xl font-semibold transition">
                             &times;
@@ -666,47 +750,69 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
                         <form id="createUserForm" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
                             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
 
-                            <div>
-                                <label for="nombre_usuario" class="block mb-1 text-gray-300 font-light text-sm">Nombre de usuario</label>
-                                <input type="text" id="nombre_usuario" name="nombre_usuario" required
-                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-                            </div>
-                            <div>
-                                <label for="contrasena" class="block mb-1 text-gray-300 font-light text-sm">Contraseña</label>
-                                <input type="password" id="contrasena" name="contrasena" required
-                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-                            </div>
-                            <div>
-                                <label for="nombre_completo" class="block mb-1 text-gray-300 font-light text-sm">Nombre completo</label>
+                            <div class="sm:col-span-2">
+                                <label for="nombre_completo" class="block mb-1 text-gray-300 font-light text-sm">Nombre completo*</label>
                                 <input type="text" id="nombre_completo" name="nombre_completo" required
                                     class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                             </div>
+
                             <div>
-                                <label for="telefono" class="block mb-1 text-gray-300 font-light text-sm">Teléfono</label>
-                                <input type="tel" id="telefono" name="telefono" pattern="[0-9+\-\s]*"
+                                <label for="nombre_usuario" class="block mb-1 text-gray-300 font-light text-sm">Nombre de usuario*</label>
+                                <input type="text" id="nombre_usuario" name="nombre_usuario" required
                                     class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                             </div>
+
                             <div>
-                                <label for="dui" class="block mb-1 text-gray-300 font-light text-sm">DUI</label>
-                                <input type="text" id="dui" name="dui" pattern="\d{8}-\d"
+                                <label for="contrasena" class="block mb-1 text-gray-300 font-light text-sm">Contraseña*</label>
+                                <input type="password" id="contrasena" name="contrasena" required minlength="6"
+                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="correo" class="block mb-1 text-gray-300 font-light text-sm">Correo electrónico*</label>
+                                <input type="email" id="correo" name="correo" required
+                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                            </div>
+
+                            <div>
+                                <label for="telefono" class="block mb-1 text-gray-300 font-light text-sm">Teléfono*</label>
+                                <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{8}"
+                                    title="8 dígitos sin guiones" maxlength="8"
+                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                            </div>
+
+                            <div>
+                                <label for="dui" class="block mb-1 text-gray-300 font-light text-sm">DUI*</label>
+                                <input type="text" id="dui" name="dui" required
+                                    pattern="\d{8}-\d{1}"
+                                    maxlength="10"
                                     placeholder="12345678-9"
+                                    title="Formato: 8 dígitos, guión y 1 dígito (ejemplo: 12345678-9)"
                                     class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                             </div>
-                            <div>
-                                <label for="rol" class="block mb-1 text-gray-300 font-light text-sm">Rol</label>
+
+                            <!-- En la sección del select dentro del modal -->
+                            <div class="sm:col-span-2">
+                                <label for="rol" class="block mb-1 text-gray-300 font-light text-sm">Rol*</label>
                                 <select id="rol" name="rol" required
                                     class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
                                     <option value="" disabled selected>Selecciona un rol</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="auditor">Auditor</option>
-                                    <option value="usuario">Usuario</option>
+                                    <?php
+                                    $adminController = new AdminController();
+                                    $roles = $adminController->getRoles();
+                                    foreach ($roles as $rol): ?>
+                                        <option value="<?= htmlspecialchars($rol['id']) ?>">
+                                            <?= htmlspecialchars($rol['nombre']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
+
                             <div class="sm:col-span-2 flex justify-end space-x-3 pt-4 border-t border-gray-700">
                                 <button type="button" id="cancelCrearBtn" class="px-5 py-2 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 font-semibold transition">
                                     Cancelar
                                 </button>
-                                <button type="submit" class="px-5 py-2 rounded-md bg-orange-600 hover:bg-orange-700 text-black font-semibold transition">
+                                <button type="submit" class="px-5 py-2 rounded-md bg-orange-600 hover:bg-orange-700 text-white font-semibold transition">
                                     Guardar
                                 </button>
                             </div>
@@ -715,7 +821,7 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
                 </div>
 
                 <!-- Modificar Modal -->
-                <div id="modalModificar" class="fixed inset-0 flex items-center justify-center p-6 hidden z-50">
+                <div id="modalModificar" class="fixed inset-0 flex items-center justify-center p-6 hidden z-50 bg-black bg-opacity-50">
                     <div class="bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative">
                         <button id="closeModalModificarBtn" aria-label="Cerrar modal" class="absolute top-3 right-3 text-gray-400 hover:text-orange-500 text-xl font-semibold transition">
                             &times;
@@ -723,49 +829,71 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
                         <h3 class="text-orange-500 text-xl font-semibold mb-6 text-center">Modificar usuario</h3>
                         <form id="modifyUserForm" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
                             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
+                            <input type="hidden" name="id" id="mod_id">
 
-                            <div>
-                                <label for="mod_nombre_usuario" class="block mb-1 text-gray-300 font-light text-sm">Nombre de usuario</label>
-                                <input type="text" id="mod_nombre_usuario" name="nombre_usuario" required
-                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-                            </div>
-                            <div>
-                                <label for="mod_contrasena" class="block mb-1 text-gray-300 font-light text-sm">Contraseña</label>
-                                <input type="password" id="mod_contrasena" name="contrasena"
-                                    placeholder="Dejar vacío para no cambiar"
-                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-                            </div>
-                            <div>
-                                <label for="mod_nombre_completo" class="block mb-1 text-gray-300 font-light text-sm">Nombre completo</label>
+                            <div class="sm:col-span-2">
+                                <label for="mod_nombre_completo" class="block mb-1 text-gray-300 font-light text-sm">Nombre completo*</label>
                                 <input type="text" id="mod_nombre_completo" name="nombre_completo" required
                                     class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                             </div>
+
                             <div>
-                                <label for="mod_telefono" class="block mb-1 text-gray-300 font-light text-sm">Teléfono</label>
-                                <input type="tel" id="mod_telefono" name="telefono" pattern="[0-9+\-\s]*"
+                                <label for="mod_nombre_usuario" class="block mb-1 text-gray-300 font-light text-sm">Nombre de usuario*</label>
+                                <input type="text" id="mod_nombre_usuario" name="nombre_usuario" required
                                     class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                             </div>
+
                             <div>
-                                <label for="mod_dui" class="block mb-1 text-gray-300 font-light text-sm">DUI</label>
-                                <input type="text" id="mod_dui" name="dui" pattern="\d{8}-\d"
+                                <label for="mod_contrasena" class="block mb-1 text-gray-300 font-light text-sm">Contraseña</label>
+                                <input type="password" id="mod_contrasena" name="contrasena" minlength="6"
+                                    placeholder="Dejar vacío para no cambiar"
+                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="mod_correo" class="block mb-1 text-gray-300 font-light text-sm">Correo electrónico*</label>
+                                <input type="email" id="mod_correo" name="correo" required
+                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                            </div>
+
+                            <div>
+                                <label for="mod_telefono" class="block mb-1 text-gray-300 font-light text-sm">Teléfono*</label>
+                                <input type="tel" id="mod_telefono" name="telefono" required pattern="[0-9]{8}"
+                                    title="8 dígitos sin guiones" maxlength="8"
+                                    class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                            </div>
+
+                            <div>
+                                <label for="mod_dui" class="block mb-1 text-gray-300 font-light text-sm">DUI*</label>
+                                <input type="text" id="mod_dui" name="dui" required
+                                    pattern="\d{8}-\d{1}"
+                                    maxlength="10"
                                     placeholder="12345678-9"
+                                    title="Formato: 8 dígitos, guión y 1 dígito (ejemplo: 12345678-9)"
                                     class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500" />
                             </div>
-                            <div>
-                                <label for="mod_rol" class="block mb-1 text-gray-300 font-light text-sm">Rol</label>
+
+                            <div class="sm:col-span-2">
+                                <label for="mod_rol" class="block mb-1 text-gray-300 font-light text-sm">Rol*</label>
                                 <select id="mod_rol" name="rol" required
                                     class="w-full bg-gray-700 text-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                    <option value="" disabled>Selecciona un rol</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="auditor">Auditor</option>
-                                    <option value="usuario">Usuario</option>
+                                    <option value="" disabled selected>Selecciona un rol</option>
+                                    <?php
+                                    $adminController = new AdminController();
+                                    $roles = $adminController->getRoles();
+                                    foreach ($roles as $rol): ?>
+                                        <option value="<?= htmlspecialchars($rol['id']) ?>">
+                                            <?= htmlspecialchars($rol['nombre']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
+
                             <div class="sm:col-span-2 flex justify-end space-x-3 pt-4 border-t border-gray-700">
                                 <button type="button" id="cancelModificarBtn" class="px-5 py-2 rounded-md bg-gray-700 hover:bg-gray-600 text-gray-300 font-semibold transition">
                                     Cancelar
                                 </button>
-                                <button type="submit" class="px-5 py-2 rounded-md bg-orange-600 hover:bg-orange-700 text-black font-semibold transition">
+                                <button type="submit" class="px-5 py-2 rounded-md bg-orange-600 hover:bg-orange-700 text-white font-semibold transition">
                                     Guardar cambios
                                 </button>
                             </div>
@@ -802,13 +930,8 @@ $totalPaginas = ceil($totalUsuarios / $usuariosPorPagina);
             </main>
         </div>
 
-        <script>
-            // Crear modal elements
-            const openModalCrearBtn = document.getElementById('openModalBtn');
-            const closeModalCrearBtn = document.getElementById('closeModalCrearBtn');
-            const cancelCrearBtn = document.getElementById('cancelCrearBtn');
-            const modalCrear = document.getElementById('modalCrear');
 
+        <script>
             // Modificar modal elements
             const modalModificar = document.getElementById('modalModificar');
             const closeModalModificarBtn = document.getElementById('closeModalModificarBtn');

@@ -170,3 +170,254 @@ Contraseña correcta
 [2025-06-01 20:34:33] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
 [2025-06-01 20:34:33] Contraseña correcta para adminCITO
 [2025-06-01 20:34:33] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 21:29:00] === procesar_login.php llamado ===
+[2025-06-01 21:29:00] Usuario recibido: adminCITO
+[2025-06-01 21:29:00] Contraseña ingresada: admin123
+[2025-06-01 21:29:00] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 21:29:00] Contraseña correcta para adminCITO
+[2025-06-01 21:29:00] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 21:29:28] === procesar_login.php llamado ===
+[2025-06-01 21:29:28] Usuario recibido: adminCITO
+[2025-06-01 21:29:28] Contraseña ingresada: dmin123
+[2025-06-01 21:29:28] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 21:29:28] Login fallido para adminCITO. Intento #1
+[2025-06-01 21:29:36] === procesar_login.php llamado ===
+[2025-06-01 21:29:36] Usuario recibido: adminCITO
+[2025-06-01 21:29:36] Contraseña ingresada: admin123
+[2025-06-01 21:29:36] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 21:29:36] Contraseña correcta para adminCITO
+[2025-06-01 21:29:36] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 22:27:55] === procesar_login.php llamado ===
+[2025-06-01 22:27:55] Usuario recibido: adminCITO
+[2025-06-01 22:27:55] Contraseña ingresada: admin123
+[2025-06-01 22:27:55] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-01 22:27:55] Contraseña correcta para adminCITO
+[2025-06-01 22:27:55] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-01 22:40:54] === procesar_login.php llamado ===
+[2025-06-01 22:40:54] Usuario recibido: Jaimito
+[2025-06-01 22:40:54] Contraseña ingresada: admin123
+[2025-06-01 22:40:54] Hash desde DB: $2y$10$ZoKgtr07rB/k8DhjTo2fse9OhgWanyPs0cE/mRiDgMDlvr2yc9GtK
+[2025-06-01 22:40:54] Contraseña correcta para Jaimito
+[2025-06-01 22:40:54] Sesión iniciada | usuario: Jaimito | rol: admin | ip: ::1
+[2025-06-02 01:35:35] === procesar_login.php llamado ===
+[2025-06-02 01:35:35] Usuario recibido: adminCITO
+[2025-06-02 01:35:35] Contraseña ingresada: admin123
+[2025-06-02 01:35:35] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-02 01:35:35] Contraseña correcta para adminCITO
+[2025-06-02 01:35:35] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-02 03:31:28] === procesar_login.php llamado ===
+[2025-06-02 03:31:28] Usuario recibido: adminCITO
+[2025-06-02 03:31:28] Contraseña ingresada: 1234
+[2025-06-02 03:31:28] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-02 03:31:28] Login fallido para adminCITO. Intento #1
+[2025-06-02 03:31:33] === procesar_login.php llamado ===
+[2025-06-02 03:31:33] Usuario recibido: adminCITO
+[2025-06-02 03:31:33] Contraseña ingresada: admin123
+[2025-06-02 03:31:33] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-02 03:31:33] Contraseña correcta para adminCITO
+[2025-06-02 03:31:33] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-02 03:37:34] === procesar_login.php llamado ===
+[2025-06-02 03:37:34] Usuario recibido: adminCITO
+[2025-06-02 03:37:34] Contraseña ingresada: admin123
+[2025-06-02 03:37:34] Hash desde DB: $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+[2025-06-02 03:37:34] Contraseña correcta para adminCITO
+[2025-06-02 03:37:34] Sesión iniciada | usuario: adminCITO | rol: admin | ip: ::1
+[2025-06-02 03:39:00] === Intento de login ===
+[2025-06-02 03:39:00] Usuario recibido: adminCITO
+[2025-06-02 03:39:00] Datos obtenidos de BD: Array
+(
+    [id] => 1
+    [nombre_usuario] => adminCITO
+    [contrasena] => $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+    [nombre_completo] => Jaime Streamer
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 03:39:00] Login exitoso para: adminCITO (ID: 1)
+[2025-06-02 03:39:00] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [usuario] => Array
+        (
+            [id] => 1
+            [nombre_usuario] => adminCITO
+            [rol] => administrador
+        )
+
+    [error] => Usuario o contraseña incorrectos.
+    [csrf_token] => ab7c55a4ee0a76ab9aba61e7942d23491790e62d6ba561ef6117d8ec1f03b86e
+    [csrf_token_expire] => 1748831850
+    [user_id] => 1
+    [username] => adminCITO
+    [nombre_completo] => Jaime Streamer
+    [rol] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 03:39:37] === Intento de login ===
+[2025-06-02 03:39:37] Usuario recibido: adminCITO
+[2025-06-02 03:39:37] Datos obtenidos de BD: Array
+(
+    [id] => 1
+    [nombre_usuario] => adminCITO
+    [contrasena] => $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+    [nombre_completo] => Jaime Streamer
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 03:39:37] Login exitoso para: adminCITO (ID: 1)
+[2025-06-02 03:39:37] Variables de sesión establecidas: Array
+(
+    [csrf_token] => fd52951b9a2d06076c4bfd18e6d3e084cd493ba6c50cdc7fe87dce4d986d6a31
+    [csrf_token_expire] => 1748831973
+    [intentos_login] => 0
+    [user_id] => 1
+    [username] => adminCITO
+    [nombre_completo] => Jaime Streamer
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 1
+            [nombre_usuario] => adminCITO
+            [rol] => administrador
+        )
+
+)
+
+[2025-06-02 03:54:07] === Intento de login ===
+[2025-06-02 03:54:07] Usuario recibido: adminCITO
+[2025-06-02 03:54:07] Datos obtenidos de BD: Array
+(
+    [id] => 1
+    [nombre_usuario] => adminCITO
+    [contrasena] => $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+    [nombre_completo] => Jaime Streamer
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 03:54:07] Login exitoso para: adminCITO (ID: 1)
+[2025-06-02 03:54:07] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [user_id] => 1
+    [username] => adminCITO
+    [nombre_completo] => Jaime Streamer
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 1
+            [nombre_usuario] => adminCITO
+            [rol] => administrador
+        )
+
+    [csrf_token] => fc9d3f60c53ffb5fb3fa39f5cc14658c04c289adc28cc9458d0ee74e1ee165c8
+    [csrf_token_expire] => 1748832842
+)
+
+[2025-06-02 03:59:22] === Intento de login ===
+[2025-06-02 03:59:22] Usuario recibido: adminCITO
+[2025-06-02 03:59:22] Datos obtenidos de BD: Array
+(
+    [id] => 1
+    [nombre_usuario] => adminCITO
+    [contrasena] => $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+    [nombre_completo] => Jaime Streamer
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 03:59:22] Login exitoso para: adminCITO (ID: 1)
+[2025-06-02 03:59:22] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [user_id] => 1
+    [username] => adminCITO
+    [nombre_completo] => Jaime Streamer
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 1
+            [nombre_usuario] => adminCITO
+            [rol] => administrador
+        )
+
+    [csrf_token] => d58d23ed47c5ce61d09de31e26c7c831958f5eddf573a878f5c995c0d43c3405
+    [csrf_token_expire] => 1748833159
+)
+
+[2025-06-02 04:17:48] === Intento de login ===
+[2025-06-02 04:17:48] Usuario recibido: adminCITO
+[2025-06-02 04:17:48] Datos obtenidos de BD: Array
+(
+    [id] => 1
+    [nombre_usuario] => adminCITO
+    [contrasena] => $2y$10$VPK9BfEd/c3zmJVRSeD6i.atAxAGgOKLto5VZwXG.8zMhwyZV9NBS
+    [nombre_completo] => Jaime Streamer
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 04:17:48] Login exitoso para: adminCITO (ID: 1)
+[2025-06-02 04:17:48] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [user_id] => 1
+    [username] => adminCITO
+    [nombre_completo] => Jaime Streamer
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 1
+            [nombre_usuario] => adminCITO
+            [rol] => administrador
+        )
+
+    [csrf_token] => f9fd97089ba49a7c254832b4696ffa0b11af86cf5595b6016b365db9e6e0588e
+    [csrf_token_expire] => 1748834264
+)
+
+[2025-06-02 04:35:02] === Intento de login ===
+[2025-06-02 04:35:02] Usuario recibido: Nelton
+[2025-06-02 04:35:02] Datos obtenidos de BD: Array
+(
+    [id] => 14
+    [nombre_usuario] => Nelton
+    [contrasena] => $2y$10$Fwh728A7oZTYTb0oBUrq7.1IK6GKzMDmcevRzuBJnForE.G1ukKyC
+    [nombre_completo] => Nelson Peña 
+    [id_rol] => 1
+    [rol_nombre] => administrador
+    [estado] => activo
+)
+
+[2025-06-02 04:35:02] Login exitoso para: Nelton (ID: 14)
+[2025-06-02 04:35:02] Variables de sesión establecidas: Array
+(
+    [intentos_login] => 0
+    [user_id] => 14
+    [username] => Nelton
+    [nombre_completo] => Nelson Peña 
+    [rol] => administrador
+    [estado] => activo
+    [usuario] => Array
+        (
+            [id] => 14
+            [nombre_usuario] => Nelton
+            [rol] => administrador
+        )
+
+    [csrf_token] => 78123c4f656a9f61cafe94446740abc77cef67fa7afe29f0ae2e429d7d9b0ec0
+    [csrf_token_expire] => 1748835298
+)
+

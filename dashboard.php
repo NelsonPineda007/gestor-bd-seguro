@@ -12,7 +12,7 @@ $rol = $_SESSION['usuario']['rol']; // Ej: 'admin', 'auditor', 'usuario'
 
 // Redirige a la vista según el rol
 switch ($rol) {
-    case 'admin':
+    case 'administrador':
         header("Location: views/admin.php");
         break;
     case 'auditor':
